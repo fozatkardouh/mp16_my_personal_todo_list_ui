@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Home</title>
+</head>
+<body>
+<form th:action="@{/todos}" th:object="${newTodo}" method="post">
+    <label>Description</label><br/>
+    <input type="text" th:field="*{task}"/><br/>
+    <button type="submit">Add</button>
+    <ul th:if="${#fields.hasErrors('*')}">
+        <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+    </ul>
+</form>
+
+<br/><br/>
+
+<table th:if="${not #lists.isEmpty(todos)}">
+    <thead>
+    <tr>
+        <th>Todo</th>
+        <th>Done?</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="todo : ${todos}">
+        <td th:text="${todo.task}">Todo String</td>
+        <td th:text="${todo.done}">Todo Boolean</td>
+        <td>
+            <form th:action="@{/todos/done}" th:object="${newTodo}" method="post">
+                <input type="hidden" th:value="${todo.id}" name="id" />
+                <button type="submit">Done</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/todos/delete}" th:object="${newTodo}" method="post">
+                <input type="hidden" th:value="${todo.id}" name="id" />
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
