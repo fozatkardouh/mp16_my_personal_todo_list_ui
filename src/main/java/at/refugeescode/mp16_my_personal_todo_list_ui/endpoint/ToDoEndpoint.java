@@ -47,6 +47,12 @@ public class ToDoEndpoint {
         return "redirect:/todos";
     }
 
+    /*@PostMapping("/done/{id}")
+    public String setToDoAsDone(@PathVariable String id) {
+        restTemplate.put(url + "/todos/" + id + "/done", ToDo.class);
+        return "redirect:/todos";
+    }*/
+
     @PostMapping("/delete")
     public String deleteOneTodo(ToDo toDo) {
         restTemplate.delete(url + "/todos/" + toDo.getId());
